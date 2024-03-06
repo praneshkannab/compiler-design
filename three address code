@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_EXPRESSION_LENGTH 100
+
+int temp_count = 1;
+
+void generateThreeAddressCode(char expression[]) {
+    char temp[3] = "t";
+    int i = 0;
+    while (expression[i] != '\0') {
+        if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' || expression[i] == '/') {
+            printf("%c = %c %c %c\n", temp[temp_count], expression[i - 1], expression[i], expression[i + 1]);
+            expression[i - 1] = temp[temp_count];
+            expression[i] = ' ';
+            expression[i + 1] = ' ';
+            temp_count++;
+        }
+        i++;
+    }
+}
+
+int main() {
+    char expression[MAX_EXPRESSION_LENGTH];
+
+    printf("Enter an arithmetic expression: ");
+    fgets(expression, MAX_EXPRESSION_LENGTH, stdin);
+    expression[strcspn(expression, "\n")] = '\0'; // Remove newline character
+
+    printf("Generated Three-Address Code:\n");
+    generateThreeAddressCode(expression);
+
+    return 0;
+}
