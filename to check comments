@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+bool isComment(const char *line) {
+    // Trim leading whitespaces
+    while (*line == ' ' || *line == '\t')
+        line++;
+
+    // Check if it starts with //
+    return (line[0] == '/' && line[1] == '/');
+}
+
+int main() {
+    char line[1000];
+
+    printf("Enter lines of code (type 'exit' to quit):\n");
+
+    while (1) {
+        fgets(line, sizeof(line), stdin);
+
+        if (strcmp(line, "exit\n") == 0) {
+            break;
+        }
+
+        if (isComment(line)) {
+            printf("Comment: %s", line);
+        } else {
+            printf("Not a comment: %s", line);
+        }
+    }
+
+    return 0;
+}
